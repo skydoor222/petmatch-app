@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PetMatch App
 
-## Getting Started
+PetMatch App は、ペットのプロフィールをもとに相性の良い候補を見つけるための Next.js アプリです。
 
-First, run the development server:
+## 現状の改善策（優先順）
+
+### 1) 開発基盤の安定化（最優先）
+- `node_modules` やビルド成果物を Git 管理から除外して、差分ノイズとコンフリクトを削減する。
+- `npm run lint` / `npm run build` をローカルの最小品質ゲートとして運用する。
+
+### 2) ドメインモデル定義
+- `Pet`（種類・年齢・性格・活動量・相性タグ）を中心に型定義を作る。
+- 将来の検索・推薦ロジックで必要な項目を先に固定し、画面実装の手戻りを減らす。
+
+### 3) MVP 画面の実装
+- 一覧画面（候補表示）
+- 詳細画面（プロフィール詳細）
+- フィルタ（犬/猫、年齢帯、性格タグ）
+
+### 4) マッチングロジックの段階導入
+- 初期は重み付きスコア（簡易ルールベース）で実装。
+- 運用データが溜まったら重み調整またはモデル化を検討。
+
+### 5) 品質と運用
+- 単体テスト（スコア計算）
+- E2E テスト（検索→詳細遷移）
+- CI で lint / build / test を自動実行
+
+## 開発コマンド
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run lint
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 追加メモ
+- まずは「最小機能で使える」MVP を短期間で出し、利用ログを元に改善するのが最も効果的です。
